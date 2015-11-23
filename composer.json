@@ -1,0 +1,22 @@
+{
+  "name": "murrion/backoffice",
+  "description": "A collection of time savers",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Gordon Murray",
+      "email": "projects@murrion.com"
+    }
+  ],
+  "require": {
+    "silex/silex": "v1.2.0",
+    "swiftmailer/swiftmailer": ">=4.1.2,<4.2-dev",
+    "vlucas/phpdotenv": "1.0.6"
+  },
+  "autoload": {
+    "psr-0": {
+      "Bitbucket\\": "src/"
+    }
+  }
+}
