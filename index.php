@@ -2,6 +2,9 @@
 
 require __DIR__ . '/bootstrap.php';
 
+/**
+ * placeholder page
+ */
 $app->get('/', function () use ($app) {
 
     return 'Hello';
@@ -9,7 +12,7 @@ $app->get('/', function () use ($app) {
 });
 
 /**
- *  Work out the days worked between 2 days for each developer
+ *  Work out the days worked between 2 dates for each developer
  */
 $app->get('/days_worked/{format}', function ($format) use ($app, $bitbucket, $bitbucket_teams) {
 
