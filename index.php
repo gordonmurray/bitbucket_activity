@@ -20,7 +20,7 @@ $app->get('/days_worked/{format}', function ($format) use ($app, $bitbucket, $bi
     $start_date = strtotime('-8 days', strtotime($current_date . ' 12:00:00')); // 'from'
     $end_date = strtotime('-1 days', strtotime($current_date . ' 11:59:59')); // 'to'
 
-    echo "Between " . date("d/m/Y H:i:s", $start_date) . " and " . date("d/m/Y H:i:s", $end_date) . "<br />\n";
+    echo "Development activity between " . date("d/m/Y H:i:s", $start_date) . " and " . date("d/m/Y H:i:s", $end_date) . "<br />\n";
 
     $activity = array();
     $repositories = array();
@@ -59,7 +59,7 @@ $app->get('/days_worked/{format}', function ($format) use ($app, $bitbucket, $bi
      */
     if ($format == 'email') {
 
-        $email_content = "Hi, \r\n\r\nBased on Bitbucket data, the following dates had development activity, from " . date("l", $start_date) . " " . date("d/m/Y", $start_date) . " to " . date("l", $end_date) . " " . date("d/m/Y", $end_date) . " inclusive.\r\n";
+        $email_content = "Hi, \r\n\r\nBased on Bitbucket data the following dates had development activity from " . date("l", $start_date) . " " . date("d/m/Y", $start_date) . " to " . date("l", $end_date) . " " . date("d/m/Y", $end_date) . " inclusive.\r\n";
 
         foreach ($activity as $developer => $dates_worked) {
 
@@ -83,7 +83,7 @@ $app->get('/days_worked/{format}', function ($format) use ($app, $bitbucket, $bi
         $message = \Swift_Message::newInstance()
             ->setSubject($_ENV['BUSINESS_NAME'] . ' development activity, ' . date("d/m/Y", $start_date) . " to " . date("d/m/Y", $end_date))
             ->setFrom(array($_ENV['SEND_EMAIL_FROM']))
-            ->setTo(array($_ENV['SEND_EMAIL_TO']))
+            ->setTo(array($_ENV['SEND_EMAIL_TO_PRIMARY'], $_ENV['SEND_EMAIL_TO_SECONDARY']))
             ->setBody($email_content);
 
         $app['mailer']->send($message);
@@ -125,6 +125,10 @@ $app->get('/days_worked_details', function () use ($app, $bitbucket, $bitbucket_
                 $changesets = $bitbucket->changesets($repository['bitbucket_team'], $repository['name'], $start_date, $end_date);
 
                 foreach ($changesets as $change) {
+
+                    print_r($change);
+
+                    exit();
 
                     $change_author = $change['raw_author'];
                     $change_date = date("Y-m-d", strtotime($change['timestamp']));
