@@ -126,10 +126,6 @@ $app->get('/days_worked_details', function () use ($app, $bitbucket, $bitbucket_
 
                 foreach ($changesets as $change) {
 
-                    print_r($change);
-
-                    exit();
-
                     $change_author = $change['raw_author'];
                     $change_date = date("Y-m-d", strtotime($change['timestamp']));
                     $change_time = date("H:ia", strtotime($change['timestamp']));
